@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --bouncy: cubic-bezier(0,2,.75,1);
+}
+
+body {
+  margin: 0;
+  background-color: rgb(25, 25, 25);
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#menu {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: fit-content;
+  background-color: rgb(40, 40, 40);
+  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.menuHeader {
+  padding: 5px;
+  background-color: rgb(40, 40, 40);
+  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer span {
+  font-size: 0.75em;
+}
+
+.inputContainer input {
+  border: none;
+  background-color: rgb(25, 25, 25);
+  box-shadow: -2px -2px inset rgb(50, 50, 50), 2px 2px inset rgb(30, 30, 30);
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.inputContainer input:focus {
+  outline: none;
+  filter: brightness(110%);
+}
+
+.checkboxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+#menu button {
+  background-color: rgb(40, 40, 40);
+  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+#menu button:hover {
+  filter: brightness(110%);
+}
+
+#warning {
+  font-size: 0.75em;
+  color: rgb(255, 119, 119);
+}
+
+#generated {
+  font-size: 0.75em;
+}
+
+.tip {
+  font-size: 0.75em;
+  color: gray;
+}
+
+
+
+.containerContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#container {
+  width: fit-content;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns with equal width */
+  grid-template-rows: repeat(3, 1fr); /* 3 rows with equal height */
+  overflow: hidden;
+}
+
+.pixel {
+  width: 10px;
+  height: 10px;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>White Noise Generator</title>
+</head>
+
+<body>
+
+    <section id="menu">
+        <div class="menuHeader">
+            <span>Pixel Generator</span>
+            <div style="font-size: 0.75em; display: flex; justify-content: space-between;">
+                <div>
+                    <span>By: </span><a href="https://debread.space" target="_blank">DeBread</a>
+                </div>
+                <div>
+                    <a href="https://github.com/NotDeBread/PixelGenerator/commits/master">v0.01</a>
+                </div>
+            </div>
+        </div>
+        <div class="inputContainer">
+            <span>Columns</span>
+            <input type="number" id="columnInput" value="10">
+        </div>
+        <div class="inputContainer">
+            <span>Rows</span>
+            <input type="number" id="rowInput" value="10">
+        </div>
+        <div class="inputContainer">
+            <span>Pixel size</span>
+            <input type="number" id="pixelSizeInput" value="10">
+        </div>
+        <div class="inputContainer">
+            <span>Blur</span>
+            <input type="number" id="blurInput" value="1">
+        </div>
+        <div class="checkboxContainer">
+            <span>Color?</span>
+            <input type="checkbox" id="colorInput" checked>
+        </div>
+        <button onclick="buttonClick()" id="button">Generate</button>
+        <span id="generated"></span>
+        <span id="warning"></span>
+        <span class="tip">Press H to hide / show this menu</span>
+        <span class="tip">Press esc to clear</span>
+        <span class="tip">Press F11 to toggle fullscreen</span>
+    </section>
+
+    <section class="containerContainer">
+        <div id="container"></div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
