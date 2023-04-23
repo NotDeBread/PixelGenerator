@@ -20,6 +20,12 @@ a:hover {
   text-decoration: underline;
 }
 
+#lagIndicator {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
 #menu {
   position: fixed;
   bottom: 10px;
@@ -61,14 +67,32 @@ a:hover {
   filter: brightness(110%);
 }
 
-.checkboxContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-#menu button {
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.setButton {
+  background-color: rgb(40, 40, 40);
+  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0 25px;
+}
+
+.buttonContainer {
+  display: flex;
+}
+
+.colorButton {
   background-color: rgb(40, 40, 40);
   box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
   color: white;
@@ -76,6 +100,24 @@ a:hover {
   border: none;
   cursor: pointer;
   margin-top: 5px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.buttonSelected {
+  background-color: rgb(25, 25, 25);
+  box-shadow: -2px -2px inset rgb(50, 50, 50), 2px 2px inset rgb(30, 30, 30);
+}
+
+#generateButton {
+  background-color: rgb(40, 40, 40);
+  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  cursor: pointer;
+  margin-top: 5px;
+  width: 100%;
 }
 
 #menu button:hover {
@@ -112,7 +154,8 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 columns with equal width */
   grid-template-rows: repeat(3, 1fr); /* 3 rows with equal height */
-  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px black;
 }
 
 .pixel {

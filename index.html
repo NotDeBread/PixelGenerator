@@ -6,10 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
-    <title>White Noise Generator</title>
+    <title>Pixel Generator</title>
 </head>
 
 <body>
+
+    <span id="lagIndicator"></span>
 
     <section id="menu">
         <div class="menuHeader">
@@ -19,7 +21,7 @@
                     <span>By: </span><a href="https://debread.space" target="_blank">DeBread</a>
                 </div>
                 <div>
-                    <a href="https://github.com/NotDeBread/PixelGenerator/commits/master">v0.01</a>
+                    <a href="https://github.com/NotDeBread/PixelGenerator/commits/master">v0.02</a>
                 </div>
             </div>
         </div>
@@ -37,14 +39,21 @@
         </div>
         <div class="inputContainer">
             <span>Blur</span>
-            <input type="number" id="blurInput" value="1">
+            <div>
+                <input type="number" id="blurInput" value="1">
+                <button class="setButton" onclick="setFilter()">Set</button>
+            </div>
         </div>
-        <div class="checkboxContainer">
-            <span>Color?</span>
-            <input type="checkbox" id="colorInput" checked>
+        <div class="buttonContainer">
+            <button onclick="buttonSelect(0)" id="button0" class="colorButton">Color</button>
+            <button onclick="buttonSelect(1)" id="button1" class="colorButton">Grayscale</button>
+            <button onclick="buttonSelect(2)" id="button2" class="colorButton">Black & White</button>
         </div>
-        <button onclick="buttonClick()" id="button">Generate</button>
-        <span id="generated"></span>
+        <button onclick="buttonClick()" id="generateButton">Generate</button>
+        <div style="display: flex; justify-content: space-between;">
+            <span id="generated"></span>
+            <span id="percent" style="font-size: 0.75em;"></span>
+        </div>
         <span id="warning"></span>
         <span class="tip">Press H to hide / show this menu</span>
         <span class="tip">Press esc to clear</span>
