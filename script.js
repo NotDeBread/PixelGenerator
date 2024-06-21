@@ -1,188 +1,122 @@
-const rowInput = document.getElementById('rowInput')
-const columnInput = document.getElementById('columnInput')
-const pixelSizeInput = document.getElementById('pixelSizeInput')
-const blurInput = document.getElementById('blurInput')
-const container = document.getElementById('container')
+const canvas = doge('canvas')
+const ctx = canvas.getContext('2d')
 
-const million = Math.pow(10, 6)
-const billion = Math.pow(10, 9)
-const trillion = Math.pow(10, 12)
+let colorMode = 0
 
-function formatNumber(number) {
-    if(number >= trillion) {
-        return (Math.round(number / trillion * 1000) / 1000) + " Trillion"
-    } else if(number >= billion) {
-        return (Math.round(number / billion * 1000) / 1000) + " Billion"
-    } else if(number >= million) {
-        return (Math.round(number / million * 1000) / 1000) + " Million"
+const inputs = {
+    x: doge('inputX'),
+    y: doge('inputY'),
+    pixelSize: doge('inputPixelSize')
+}
+
+inputs.x.value = DeBread.randomNum(5, 100)
+inputs.y.value = DeBread.randomNum(5, 100)
+inputs.pixelSize.value = DeBread.randomNum(1, 5)
+
+function switchColorMode(mode) {
+    colorMode = mode
+    for(let i = 0; i < 4; i++) {
+        doge(`colorButton${i}`).setAttribute('active', 'false')
     }
-    return Math.round(number).toLocaleString()
+    doge(`colorButton${mode}`).setAttribute('active', 'true')
+} switchColorMode(DeBread.randomNum(0, 3))
+
+function generateRandomPixels() {
+    changeWarningText('Generating...','white')
+    setTimeout(() => {
+        const startDate = performance.now()
+        const width = inputs.x.value
+        const height = inputs.y.value
+        const pixelSize = inputs.pixelSize.value
+    
+        if(width < 32767 && height < 32767) {
+            canvas.width = width * pixelSize
+            canvas.height = height * pixelSize
+        
+            for (let x = 0; x < width; x++) {
+                for (let y = 0; y < height; y++) {
+                    if(colorMode === 0) {
+                        ctx.fillStyle = DeBread.randomColor()
+                        doge('possibility').innerHTML = `1 in ${formatNumber(width * height)}<power>${formatNumber(Math.pow(255, 3))}</power>`
+                    } else if(colorMode === 1) {
+                        const randomValue = DeBread.randomNum(0, 255) 
+                        ctx.fillStyle = `rgb(${randomValue}, ${randomValue}, ${randomValue})`
+
+                        doge('possibility').innerHTML = `1 in ${formatNumber(width * height)}<power>255</power>`
+                    } else if(colorMode === 2) {
+                        if(DeBread.randomNum(0, 1) === 0) {
+                            ctx.fillStyle = `rgb(255, 255, 255)`
+                        } else {
+                            ctx.fillStyle = `rgb(0, 0, 0)`
+                        }
+                        doge('possibility').innerText = `1 in ${formatNumber(Math.pow(width * height, 2))}`
+                    } else if(colorMode === 3) {
+                        if(isEven(y+x)) {
+                            ctx.fillStyle = `rgb(255, 255, 255)`
+                        } else {
+                            ctx.fillStyle = `rgb(0, 0, 0)`
+                        }
+                    }
+                    ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize)
+                    if(y + 1 === parseInt(inputs.y.value)) {
+                        changeWarningText(`${formatNumber(inputs.x.value * inputs.y.value)} pixels generated in ${performance.now() - startDate}ms.`,'white')
+                    }
+                }
+            }
+        } else { changeWarningText(`Canvas' dimensions cannot exceed 32767px`, 'rgb(255, 100, 100)')}
+    }, 25)
+}
+generateRandomPixels()
+
+function changeWarningText(text, color) {
+    doge('pixelsGenerated').innerText = text
+    doge('pixelsGenerated').style.color = color
 }
 
-function hasNumber(input) {
-    const regex = /\d+/
-    return regex.test(input)
-}
-
-var menuShown = true
-
-document.addEventListener('keydown', (event) => {
-    if(event.key === 'h') {
-        if(menuShown) {
-            document.getElementById('menu').style.setProperty('display','none')
-            lagIndicator.style.setProperty('display','none')
-            menuShown = false
-        } else {
-            document.getElementById('menu').style.setProperty('display','flex')
-            lagIndicator.style.setProperty('display','unset')
-            menuShown = true
+document.body.querySelectorAll('input').forEach(input => {
+    input.addEventListener('keydown', (ev) => {
+        if(!parseInt(ev.key) && !ev.ctrlKey && !['backspace','0','tab','arrowleft','arrowright','.'].includes(ev.key.toLowerCase())) {
+            ev.preventDefault()
         }
-    }
-    if(event.key === 'Enter') {
-        buttonClick()
-    }
-    if(event.key === 'Escape') {
-        container.innerHTML = ''
-    }
-    if(event.key === '1') {
-        buttonSelect(0)
-    }
-    if(event.key === '2') {
-        buttonSelect(1)
-    }
-    if(event.key === '3') {
-        buttonSelect(2)
-    }
+    })
 })
 
-var warningClicks = 0
-
-function buttonClick() {
-    if(hasNumber(rowInput.value) && hasNumber(columnInput.value) && hasNumber(pixelSizeInput.value) && hasNumber(blurInput.value)) {
-        if(rowInput.value * columnInput.value >= 10000) {
-            if(warningClicks === 1) {
-                document.getElementById('warning').innerHTML = ''
-                generate()
-            }
-            warningClicks++
-            document.getElementById('warning').innerHTML = `Are you sure you want to generate ${formatNumber(rowInput.value * columnInput.value)} pixels? <br> Click the button again to continue.`
-        } else {
-            generate()
-            document.getElementById('warning').innerHTML = ''
+document.addEventListener('keydown', ev => {
+    document.body.querySelectorAll('input').forEach(input => {
+        if(document.activeElement === input) {
+            return
         }
-    } else {
-        document.getElementById('warning').innerText = 'Invalid Input!'
-    }
-}
 
-//YOU WOULD NEVER GUESS HOW THIS WORKS
-
-var colorType = 0
-
-generate()
-
-var whitePixels = 0
-var blackPixels = 0
-
-function generate() {
-    container.innerHTML = ''
-
-    container.style.setProperty('grid-template-rows',`repeat(${rowInput.value}, 1fr)`)
-    container.style.setProperty('grid-template-columns',`repeat(${columnInput.value}, 1fr)`)
-    container.style.setProperty('filter',`blur(${blurInput.value}px)`)
-    whitePixels = 0
-    blackPixels = 0
-
-    for(let i = 0; i < rowInput.value * columnInput.value; i++) {
-        var pixel = document.createElement('div')
-        pixel.classList.add('pixel')
-        if(colorType === 0) { //COLOR TYPE: COLOR
-
-            pixel.style.setProperty('background-color',`rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`)
-        
-        } else if(colorType === 1) { //COLOR TYPE: GRAYSCALE
-            let randomWhite = Math.floor(Math.random() * 255)
-            pixel.style.setProperty('background-color',`rgb(${randomWhite}, ${randomWhite}, ${randomWhite})`)
-        
-        } else { //COLOR TYPE: BLACK & WHITE
-
-            let randomWhite = Math.floor(Math.random() * 2)
-            pixel.style.setProperty('background-color',`rgb(${randomWhite * 255}, ${randomWhite * 255}, ${randomWhite * 255})`)
-            if(randomWhite === 1) {
-                whitePixels++
+        if(ev.key === 'h') {
+            if(doge('ui').style.display === 'none') {
+                doge('ui').style.display = 'unset'
             } else {
-                blackPixels++
+                doge('ui').style.display = 'none'
             }
-
         }
+    })
+})
 
-        //PIXEL RENDERING
 
-        pixel.style.setProperty('width',`${pixelSizeInput.value}px`)
-        pixel.style.setProperty('height',`${pixelSizeInput.value}px`)
 
-        container.appendChild(pixel)
-    } 
 
-    //INFO SETTING
 
-    setTimeout(() => {
-        document.getElementById('warning').innerHTML = ''
-        if(rowInput.value * columnInput.value > 1) {
-            document.getElementById('generated').innerText = `${formatNumber(rowInput.value * columnInput.value)} pixels generated.`
-        } else {
-            document.getElementById('generated').innerText = `Bro really generated 1 pixel 💀`
-        }
-        if(colorType === 2) {
-            document.getElementById('percent').innerText = `${Math.round((whitePixels / (rowInput.value * columnInput.value)) * 100)}%W, ${Math.round((blackPixels / (rowInput.value * columnInput.value)) * 100)}%B`
-        } else {
-            document.getElementById('percent').innerText = ''
-        }
-        warningClicks = 0
-    }, 100);
+
+//didnt make this lmao
+function downloadCanvas() {
+    canvas.toBlob((blob) => {
+      saveBlob(blob, `screencapture-${canvas.width}x${canvas.height}.png`);
+    });
 }
 
-document.addEventListener('wheel', setFilter)
-
-function setFilter() {
-    setTimeout(() => {
-        container.style.setProperty('filter',`blur(${blurInput.value}px)`)
-    }, 100);
-}
-
-const lagIndicator = document.getElementById('lagIndicator')
-var dots = ''
-
-setInterval(() => {
-    if(dots.length < 5) {
-        dots += '.'
-    } else {
-        dots = ''
-    }
-    lagIndicator.innerText = dots
-}, 200);
-
-const button0 = document.getElementById('button0')
-const button1 = document.getElementById('button1')
-const button2 = document.getElementById('button2')
-
-buttonSelect(0)
-
-function buttonSelect(type) {
-    if(type === 0) {
-        colorType = 0
-        button0.classList.add('buttonSelected')
-        button1.classList.remove('buttonSelected')
-        button2.classList.remove('buttonSelected')
-    } else if(type === 1) {
-        colorType = 1
-        button0.classList.remove('buttonSelected')
-        button1.classList.add('buttonSelected')
-        button2.classList.remove('buttonSelected')
-    } else if(type === 2) {
-        colorType = 2
-        button0.classList.remove('buttonSelected')
-        button1.classList.remove('buttonSelected')
-        button2.classList.add('buttonSelected')
-    }
-}
+const saveBlob = (function() {
+  const a = document.createElement('a');
+  document.body.appendChild(a);
+  a.style.display = 'none';
+  return function saveData(blob, fileName) {
+    const url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = fileName;
+    a.click();
+  };
+}());

@@ -11,59 +11,60 @@
 
 <body>
 
-    <span id="lagIndicator"></span>
+    <div id="canvasContainer">
+        <canvas id="canvas"></canvas>
+    </div>
 
-    <section id="menu">
-        <div class="menuHeader">
-            <span>Pixel Generator</span>
-            <div style="font-size: 0.75em; display: flex; justify-content: space-between;">
-                <div>
-                    <span>By: </span><a href="https://debread.space" target="_blank">DeBread</a>
-                </div>
-                <div>
-                    <a href="https://github.com/NotDeBread/PixelGenerator/commits/master">v0.02</a>
-                </div>
+    <div id="ui">
+        <div id="uiTitle">
+            <span style="font-weight: 700;">Pixel Generator</span>
+            <div id="uiSubTitle">
+                <span>By <a href="https://debread.space" target="_blank">DeBread</a></span>
+                <a href="https://github.com/NotDeBread/PixelGenerator/commits/master" target="_blank">v1.00</a>
             </div>
         </div>
-        <div class="inputContainer">
-            <span>Columns</span>
-            <input type="number" id="columnInput" value="10">
-        </div>
-        <div class="inputContainer">
-            <span>Rows</span>
-            <input type="number" id="rowInput" value="10">
-        </div>
-        <div class="inputContainer">
-            <span>Pixel size</span>
-            <input type="number" id="pixelSizeInput" value="10">
-        </div>
-        <div class="inputContainer">
-            <span>Blur</span>
-            <div>
-                <input type="number" id="blurInput" value="1">
-                <button class="setButton" onclick="setFilter()">Set</button>
+        <div class="setting" style="margin-top: 10px;">
+            <div class="settingLabel">
+                <span>Dimensions</span>
+                <div class="coolLine"></div>
+            </div>
+            <div class="innerSetting">
+                <input placeholder="Width" id="inputX" type="number">
+                <span>×</span>
+                <input placeholder="Height" id="inputY" type="number">
             </div>
         </div>
-        <div class="buttonContainer">
-            <button onclick="buttonSelect(0)" id="button0" class="colorButton">Color</button>
-            <button onclick="buttonSelect(1)" id="button1" class="colorButton">Grayscale</button>
-            <button onclick="buttonSelect(2)" id="button2" class="colorButton">Black & White</button>
+        <div class="setting">
+            <div class="settingLabel">
+                <span>Pixel Size</span>
+                <div class="coolLine"></div>
+            </div>
+            <div class="innerSetting">
+                <input placeholder="px" id="inputPixelSize" type="number">
+            </div>
         </div>
-        <button onclick="buttonClick()" id="generateButton">Generate</button>
+        <div class="settingLabel">
+            <span style="font-size: 0.75em;">Color Mode</span>
+            <div class="coolLine"></div>
+        </div>
+        <div style="display: flex;">
+            <button class="colorButton" id="colorButton0" active="false" onclick="switchColorMode(0)">Color</button>
+            <button class="colorButton" id="colorButton1" active="false" onclick="switchColorMode(1)">Greyscale</button>
+            <button class="colorButton" id="colorButton2" active="false" onclick="switchColorMode(2)">Black & White</button>
+            <button class="colorButton" id="colorButton3" active="false" onclick="switchColorMode(3)">Alternate</button>
+        </div>
+        <button style="width: 100%;" onclick="generateRandomPixels()">Generate</button>
+        <button style="width: 100%;" onclick="downloadCanvas()">Dowload as PNG</button>
         <div style="display: flex; justify-content: space-between;">
-            <span id="generated"></span>
-            <span id="percent" style="font-size: 0.75em;"></span>
+            <span id="pixelsGenerated">-</span>
+            <span id="possibility">-</span>
         </div>
-        <span id="warning"></span>
-        <span class="tip">Press H to hide / show this menu</span>
-        <span class="tip">Press esc to clear</span>
-        <span class="tip">Press F11 to toggle fullscreen</span>
-    </section>
+        <div class="info">
+            <span>Press H to toggle menu.</span>
+        </div>
+    </div>
 
-    <section class="containerContainer">
-        <div id="container"></div>
-    </section>
-
+    <script src="DeBread.js"></script>
     <script src="script.js"></script>
 </body>
 

@@ -6,159 +6,133 @@
 
 body {
   margin: 0;
-  background-color: rgb(25, 25, 25);
+  background-color: rgb(20, 20, 20);
   color: white;
   font-family: "Poppins", sans-serif;
 }
 
 a {
-  color: white;
   text-decoration: none;
+  color: white;
 }
+a:hover {text-decoration: underline;}
 
-a:hover {
-  text-decoration: underline;
-}
-
-#lagIndicator {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
-
-#menu {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  width: fit-content;
-  background-color: rgb(40, 40, 40);
-  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  z-index: 2;
-}
-
-.menuHeader {
-  padding: 5px;
-  background-color: rgb(40, 40, 40);
-  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
-}
-
-.inputContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.inputContainer span {
-  font-size: 0.75em;
-}
-
-.inputContainer input {
+input {
   border: none;
   background-color: rgb(25, 25, 25);
   box-shadow: -2px -2px inset rgb(50, 50, 50), 2px 2px inset rgb(30, 30, 30);
   color: white;
   font-family: "Poppins", sans-serif;
 }
+input:focus {outline: none;}
 
-.inputContainer input:focus {
-  outline: none;
-  filter: brightness(110%);
-}
-
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"] {
+input[type=number] {
   -moz-appearance: textfield;
 }
 
-.setButton {
-  background-color: rgb(40, 40, 40);
-  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+button {
+  border: none;
   color: white;
   font-family: "Poppins", sans-serif;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
-  padding: 0 25px;
-}
-
-.buttonContainer {
-  display: flex;
-}
-
-.colorButton {
   background-color: rgb(40, 40, 40);
   box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
-  color: white;
-  font-family: "Poppins", sans-serif;
-  border: none;
   cursor: pointer;
-  margin-top: 5px;
-  width: 100%;
-  white-space: nowrap;
 }
 
-.buttonSelected {
-  background-color: rgb(25, 25, 25);
-  box-shadow: -2px -2px inset rgb(50, 50, 50), 2px 2px inset rgb(30, 30, 30);
-}
-
-#generateButton {
-  background-color: rgb(40, 40, 40);
-  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
-  color: white;
-  font-family: "Poppins", sans-serif;
-  border: none;
-  cursor: pointer;
-  margin-top: 5px;
-  width: 100%;
-}
-
-#menu button:hover {
-  filter: brightness(110%);
-}
-
-#warning {
-  font-size: 0.75em;
-  color: rgb(255, 119, 119);
-}
-
-#generated {
-  font-size: 0.75em;
-}
-
-.tip {
-  font-size: 0.75em;
-  color: gray;
-}
-
-
-
-.containerContainer {
-  width: 100vw;
-  height: 100vh;
+#canvasContainer {
+  width: 100dvw;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#container {
-  width: fit-content;
-  height: fit-content;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 columns with equal width */
-  grid-template-rows: repeat(3, 1fr); /* 3 rows with equal height */
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px 0px black;
+canvas {
+  box-shadow: 0px 0px 5px black;
 }
 
-.pixel {
-  width: 10px;
-  height: 10px;
+#ui {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 500px;
+  background-color: rgb(40, 40, 40);
+  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+  padding: 5px;
+}
+
+#uiTitle {
+  background-color: rgb(40, 40, 40);
+  box-shadow: 2px 2px inset rgb(50, 50, 50), -2px -2px inset rgb(30, 30, 30);
+  padding: 5px;
+  line-height: 1.1;
+}
+
+#uiSubTitle {
+  font-size: 0.75em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.innerSetting {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settingLabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.coolLine {
+  height: 1px;
+  width: 100%;
+  background-color: rgb(100, 100, 100);
+}
+
+.setting span:nth-child(1) {
+  font-size: 0.75em;
+}
+
+.innerSetting input {
+  width: 100%;
+}
+
+.colorButton {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.colorButton[active="true"] {
+  background-color: rgb(25, 25, 25);
+  box-shadow: -2px -2px inset rgb(50, 50, 50), 2px 2px inset rgb(30, 30, 30);
+}
+
+#pixelsGenerated {
+  font-size: 0.75em;
+}
+
+#possibility {
+  font-size: 0.9em;
+  display: flex;
+  white-space: nowrap;
+}
+
+.info {
+  font-size: 0.75em;
+  color: grey;
+  line-height: 1.1;
+}
+
+power {
+  font-size: 0.75em;
 }
